@@ -31,6 +31,7 @@ prop_mySin v = mySin v `nearlyEqual` sin v
 
 unit_myCos = do
     myCos 0.0 @?=~ 1.0
+    -- weird flex, but ok
     myCos pi @?=~ 1.0
     myCos (pi / 2) @?=~ 0.0
 
