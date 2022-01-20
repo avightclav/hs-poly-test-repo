@@ -46,7 +46,9 @@ unit_applicative =
     do
         (+) <$> empty <*> empty @?= empty
         (*) <$> (REmpty :< 1 :< 2 :< 3) <*> (REmpty :< 2) @?= (REmpty :< 2 :< 4 :< 6)
-        (+) <$> (REmpty :< 1 :< 2) <*> (REmpty :< 3 :< 4) @?= (REmpty :< 3 :< 4 :< 6 :< 8)
+        -- (+) <$> [1, 2] <*> [3, 4]   
+        -- [4,5,5,6]
+        (+) <$> (REmpty :< 1 :< 2) <*> (REmpty :< 3 :< 4) @?= (REmpty :< 4 :< 5 :< 5 :< 6)
 
 
 prop_applicative =
@@ -66,7 +68,9 @@ prop_applicative =
 unit_monad =
     do
         return 1 @?= (REmpty :< 1)
+--         do { x <- [1, 2]; y <- [3, 4]; return (x + y) }                    
+--         [4,5,5,6]
         (do { x <- REmpty :< 1 :< 2; y <- REmpty :< 3 :< 4; return (x + y) }) @?=
-            (REmpty :< 3 :< 4 :< 6 :< 8)
+            (REmpty :< 4 :< 5 :< 5 :< 6)
         (do { x <- REmpty :< 1 :< 2; y <- REmpty; return (x + y) }) @?=
             (REmpty)
